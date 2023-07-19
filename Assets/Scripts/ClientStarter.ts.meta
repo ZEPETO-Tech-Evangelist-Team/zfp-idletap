@@ -1,0 +1,39 @@
+fileFormatVersion: 2
+guid: b86714331baa15243a49032e33da552f
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
+    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nclass ClientStarter extends
+    ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    Start() {\r\n        this.multiplayReference.add_RoomJoined((room)
+    => {\r\n            // Make reference to room\r\n            this.roomReference
+    = room;\r\n            // Add server message listener type by \"attack\"\r\n           
+    room.AddMessageHandler(\"SERVER_ATTACK_MESSAGE\", (message) => {\r\n               
+    // Print server message\r\n                console.log(message);\r\n               
+    // Execute server message\r\n                this.Attack(message);\r\n           
+    });\r\n        });\r\n    }\r\n    SendAttackMessageToServer() {\r\n        let
+    damageAmount = 1;\r\n        this.roomReference.Send(\"CLIENT_ATTACK_MESSAGE\",
+    damageAmount);\r\n    }\r\n    Attack(attackAmount) {\r\n        let height =
+    this.enemyGameObject.transform.localScale.y;\r\n        this.enemyGameObject.transform.localScale
+    = new UnityEngine_1.Vector3(4, height - attackAmount, 4);\r\n        if (this.enemyGameObject.transform.localScale.y
+    === 0) {\r\n            this.enemyGameObject.transform.localScale = new UnityEngine_1.Vector3(4,
+    15, 4);\r\n        }\r\n    }\r\n}\r\nexports.default = ClientStarter;\r\n//#
+    sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiQ2xpZW50U3RhcnRlci5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIkNsaWVudFN0YXJ0ZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFBQSw2Q0FBa0Q7QUFFbEQsaURBQXFEO0FBR3JELE1BQXFCLGFBQWMsU0FBUSxxQ0FBcUI7SUFPNUQsS0FBSztRQUVELElBQUksQ0FBQyxrQkFBa0IsZ0JBQWUsQ0FBQyxJQUFVLEVBQUUsRUFBRTtZQUNqRCx5QkFBeUI7WUFDekIsSUFBSSxDQUFDLGFBQWEsR0FBRyxJQUFJLENBQUM7WUFFMUIsK0NBQStDO1lBQy9DLElBQUksQ0FBQyxpQkFBaUIsQ0FBQyx1QkFBdUIsRUFBRSxDQUFDLE9BQWUsRUFBRSxFQUFFO2dCQUVoRSx1QkFBdUI7Z0JBQ3ZCLE9BQU8sQ0FBQyxHQUFHLENBQUMsT0FBTyxDQUFDLENBQUM7Z0JBRXJCLHlCQUF5QjtnQkFDekIsSUFBSSxDQUFDLE1BQU0sQ0FBQyxPQUFPLENBQUMsQ0FBQztZQUN6QixDQUFDLENBQUMsQ0FBQztRQUNQLENBQUMsRUFBQztJQUNOLENBQUM7SUFFTSx5QkFBeUI7UUFDNUIsSUFBSSxZQUFZLEdBQVcsQ0FBQyxDQUFDO1FBQzdCLElBQUksQ0FBQyxhQUFhLENBQUMsSUFBSSxDQUFDLHVCQUF1QixFQUFFLFlBQVksQ0FBQyxDQUFDO0lBQ25FLENBQUM7SUFFTSxNQUFNLENBQUMsWUFBb0I7UUFDOUIsSUFBSSxNQUFNLEdBQUcsSUFBSSxDQUFDLGVBQWUsQ0FBQyxTQUFTLENBQUMsVUFBVSxDQUFDLENBQUMsQ0FBQztRQUN6RCxJQUFJLENBQUMsZUFBZSxDQUFDLFNBQVMsQ0FBQyxVQUFVLEdBQUcsSUFBSSxxQkFBTyxDQUFDLENBQUMsRUFBRSxNQUFNLEdBQUcsWUFBWSxFQUFFLENBQUMsQ0FBQyxDQUFDO1FBRXJGLElBQUksSUFBSSxDQUFDLGVBQWUsQ0FBQyxTQUFTLENBQUMsVUFBVSxDQUFDLENBQUMsS0FBSyxDQUFDLEVBQUU7WUFDbkQsSUFBSSxDQUFDLGVBQWUsQ0FBQyxTQUFTLENBQUMsVUFBVSxHQUFHLElBQUkscUJBQU8sQ0FBQyxDQUFDLEVBQUUsRUFBRSxFQUFFLENBQUMsQ0FBQyxDQUFDO1NBQ3JFO0lBQ0wsQ0FBQztDQUNKO0FBdENELGdDQXNDQyJ9","assetPath":"Assets/Scripts/ClientStarter.ts","manifest":{"properties":[{"assembly":"ZEPETO.World","name":"multiplayReference","type":"ZEPETO.World.ZepetoWorldMultiplay","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"","name":"roomReference","type":"ZEPETO.Multiplay.Room","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"UnityEngine.CoreModule","name":"enemyGameObject","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"ClientStarter","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 0efced995163de5363816201a34f25f7
+  onlyWriteTrigger: 0

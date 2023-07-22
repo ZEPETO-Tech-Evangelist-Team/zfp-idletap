@@ -1,0 +1,36 @@
+fileFormatVersion: 2
+guid: 11f2bce78d811bb49a99c4b5b17804dc
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
+    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst UserInfoPanel_1 = require(\"./UserInfoPanel\");\r\nclass
+    UIManager extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    Start() {\r\n       
+    this.UserInfoPanels = new Map();\r\n    }\r\n    AddUserInfoPanel(userId) {\r\n       
+    if (this.UserInfoPanels.has(userId) === false) {\r\n            const userInfoPanelGameObject
+    = UnityEngine_1.GameObject.Instantiate(UnityEngine_1.Resources.Load(\"UserInfoPanel\"),
+    this.transform.position, UnityEngine_1.Quaternion.identity);\r\n            userInfoPanelGameObject.transform.parent
+    = this.UserInfoPanelsParent.transform;\r\n            const userInfoPanel = userInfoPanelGameObject.GetComponent($typeof(UserInfoPanel_1.default));\r\n           
+    userInfoPanel.InitUserInfoPanel(userId);\r\n            this.UserInfoPanels.set(userId,
+    userInfoPanel);\r\n        }\r\n    }\r\n    RemoveUserInfoPanel(userId) {\r\n       
+    UnityEngine_1.GameObject.Destroy(this.UserInfoPanels.get(userId).gameObject);\r\n       
+    this.UserInfoPanels.delete(userId);\r\n    }\r\n}\r\nexports.default = UIManager;\r\n//#
+    sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiVUlNYW5hZ2VyLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiVUlNYW5hZ2VyLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUEsNkNBQXVFO0FBQ3ZFLGlEQUFxRDtBQUNyRCxtREFBNEM7QUFHNUMsTUFBcUIsU0FBVSxTQUFRLHFDQUFxQjtJQUl4RCxLQUFLO1FBQ0QsSUFBSSxDQUFDLGNBQWMsR0FBRyxJQUFJLEdBQUcsRUFBeUIsQ0FBQztJQUMzRCxDQUFDO0lBRUQsZ0JBQWdCLENBQUMsTUFBZTtRQUM1QixJQUFJLElBQUksQ0FBQyxjQUFjLENBQUMsR0FBRyxDQUFDLE1BQU0sQ0FBQyxLQUFLLEtBQUssRUFBRTtZQUMzQyxNQUFNLHVCQUF1QixHQUFnQix3QkFBVSxDQUFDLFdBQVcsQ0FBQyx1QkFBUyxDQUFDLElBQUksQ0FBYSxlQUFlLENBQUMsRUFBRSxJQUFJLENBQUMsU0FBUyxDQUFDLFFBQVEsRUFBRSx3QkFBVSxDQUFDLFFBQVEsQ0FBZSxDQUFDO1lBQzdLLHVCQUF1QixDQUFDLFNBQVMsQ0FBQyxNQUFNLEdBQUcsSUFBSSxDQUFDLG9CQUFvQixDQUFDLFNBQVMsQ0FBQztZQUMvRSxNQUFNLGFBQWEsR0FBbUIsdUJBQXVCLENBQUMsWUFBWSxTQUFDLHVCQUFhLEVBQUcsQ0FBQztZQUM1RixhQUFhLENBQUMsaUJBQWlCLENBQUMsTUFBTSxDQUFDLENBQUM7WUFDeEMsSUFBSSxDQUFDLGNBQWMsQ0FBQyxHQUFHLENBQUMsTUFBTSxFQUFFLGFBQWEsQ0FBQyxDQUFDO1NBQ2xEO0lBQ0wsQ0FBQztJQUVELG1CQUFtQixDQUFDLE1BQWU7UUFDL0Isd0JBQVUsQ0FBQyxPQUFPLENBQUMsSUFBSSxDQUFDLGNBQWMsQ0FBQyxHQUFHLENBQUMsTUFBTSxDQUFDLENBQUMsVUFBVSxDQUFDLENBQUM7UUFDL0QsSUFBSSxDQUFDLGNBQWMsQ0FBQyxNQUFNLENBQUMsTUFBTSxDQUFDLENBQUM7SUFDdkMsQ0FBQztDQUVKO0FBdkJELDRCQXVCQyJ9","assetPath":"Assets/Scripts/UIManager.ts","manifest":{"properties":[{"assembly":"UnityEngine.CoreModule","name":"UserInfoPanelsParent","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"UIManager","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 3b4a9f4fe5a944eeda0e66e3b6fd8d1f
+  onlyWriteTrigger: 0

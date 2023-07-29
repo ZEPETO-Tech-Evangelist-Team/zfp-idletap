@@ -1,5 +1,5 @@
-import { Sandbox, SandboxOptions, SandboxPlayer, SystemError } from "ZEPETO.Multiplay";
-import { DataStorage, DataStorageError } from "ZEPETO.Multiplay.DataStorage";
+import { Sandbox, SandboxOptions, SandboxPlayer } from "ZEPETO.Multiplay";
+import { DataStorage } from "ZEPETO.Multiplay.DataStorage";
 import { SchemaPlayer } from "ZEPETO.Multiplay.Schema";
 
 export interface AttackInfo {
@@ -9,120 +9,69 @@ export interface AttackInfo {
 }
 
 export default class extends Sandbox {
-    //private _currentPlayers : Map<string, SchemaPlayer>;
-
     onCreate(options: SandboxOptions) {
+        console.log("on create");
+        this.state.enemy.health = 15;
+
         this.onMessage("CLIENT_ATTACK_MESSAGE", (client: SandboxPlayer, message: number) => {
-            this.state.schemaPlayers.get(client.userId)?.attackCount;
-            // Triggers when 'action' message is sent.
-            // Broadcast a message to all clients
+            console.log("CLIENT_ATTACK_MESSAGE received");
+            const schemaPlayer : SchemaPlayer | undefined = this.state.schemaPlayers.get(client.userId);
+            if (schemaPlayer) {
+                schemaPlayer.attackCount += message;
+            }
 
-
-            this.GetAttackCount(client).then((number) => {
-                if (number) 
-                {
-                    this.SetAttackCount(client, number + message).then(() => {
-                        let attackInfo = {
-                            ownerUserId : client.userId,
-                            attackAmount : message,
-                            lifetimeAttacks : number + message,
-                        } as AttackInfo;
-
-                        this.broadcast("SERVER_ATTACK_MESSAGE", attackInfo);
-                    });
-                }
-                else 
-                {
-
-                    this.SetAttackCount(client, message).then(() => {
-                        let attackInfo = {
-                            ownerUserId : client.userId,
-                            attackAmount : message,
-                            lifetimeAttacks : message,
-                        } as AttackInfo;
-
-                        this.broadcast("SERVER_ATTACK_MESSAGE", attackInfo);
-                    });
-                }
-
-            });
+            this.state.enemy.health -= message;
+            if (this.state.enemy.health === 0) {
+                this.state.enemy.health = 15;
+            }
         });
     }
 
-    onJoin(client: SandboxPlayer) {
+    async onJoin(client: SandboxPlayer) {
         console.log("onJoin");
+
+        let attackCount : number = await this.LoadData(client);
+
+        if (!attackCount) {
+            attackCount = 0;
+        }
+
         const schemaPlayer : SchemaPlayer = new SchemaPlayer();
         schemaPlayer.userId = client.userId;
+        schemaPlayer.attackCount = attackCount;
         this.state.schemaPlayers.set(client.userId, schemaPlayer);
     }
 
-    onLeave(client: SandboxPlayer, consented?: boolean) {
+    async onLeave(client: SandboxPlayer, consented?: boolean) {
+        console.log("onLeave");
+
+        const schemaPlayer = this.state.schemaPlayers.get(client.userId);
+
+        if (schemaPlayer) {
+            await this.SaveData(client, schemaPlayer.attackCount);
+        }
+
         this.state.schemaPlayers.delete(client.userId);
     }
 
-    async SetAttackCount(client : SandboxPlayer, attackCount : number) 
-    {
-
+    async LoadData(client : SandboxPlayer) : Promise<number> {
         const playerStorage : DataStorage = client.loadDataStorage();
 
-        try 
-        {
-            const success : boolean = await playerStorage.set("attackCount", attackCount);
-            if (success) {
-                console.log(`[SetAttackCount] ${attackCount}`);
-            }
+        let attackCount : number = await playerStorage.get("attackCount");
+
+        const schemaPlayer : SchemaPlayer | undefined = this.state.schemaPlayers.get(client.userId);
+
+        if (schemaPlayer) {
+            schemaPlayer.attackCount = attackCount;
         }
 
-        catch(error) 
-        {
-            let systemError = (error as SystemError);
-            
-            if (systemError.code === DataStorageError.Unknown.toString() || systemError.code === DataStorageError.NetworkError.toString()) 
-            {
-                console.log(systemError.message);
-            }
-            else if (systemError.code === DataStorageError.KeyConstraintViolated.toString()) 
-            {
-                console.log(systemError.message);
-            }
-            else if (systemError.code === DataStorageError.ValueConstraintViolated.toString()) 
-            {
-                console.log(systemError.message);
-            }
-        }
+        return attackCount;
     }
 
-    async GetAttackCount(client : SandboxPlayer) : Promise<number | null> {
-
+    async SaveData(client :SandboxPlayer, attackCount : number) : Promise<void> {
         const playerStorage : DataStorage = client.loadDataStorage();
 
-        try 
-        {
-            const attackCount : number = await playerStorage.get("attackCount");
-            if (attackCount) {
-                return attackCount;
-            }
-        }
-
-        catch(error) 
-        {
-            let systemError = (error as SystemError);
-            
-            if (systemError.code === DataStorageError.Unknown.toString() || systemError.code === DataStorageError.NetworkError.toString()) 
-            {
-                console.log(systemError.message);
-            }
-            else if (systemError.code === DataStorageError.KeyConstraintViolated.toString()) 
-            {
-                console.log(systemError.message);
-            }
-            else if (systemError.code === DataStorageError.ValueConstraintViolated.toString()) 
-            {
-                console.log(systemError.message);
-            }
-        }
-
-        return null;
+        await playerStorage.set("attackCount", attackCount);
     }
 
 }

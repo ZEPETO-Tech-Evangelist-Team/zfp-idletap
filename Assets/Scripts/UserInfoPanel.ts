@@ -7,11 +7,8 @@ import { ZepetoWorldHelper } from 'ZEPETO.World';
 export default class UserInfoPanel extends ZepetoScriptBehaviour {
     public profileImage : Image;
     public lifetimeHitsText : TextMeshProUGUI;
-    public hitsText : TextMeshProUGUI;
-    private _hitsAmount : number;
 
-    InitUserInfoPanel(userId : string) { 
-        this._hitsAmount = 0; 
+    InitUserInfoPanel(userId : string) {
         ZepetoWorldHelper.GetProfileTexture(userId, (texture: Texture) => {
             this.profileImage.sprite = this.GetSprite(texture);
         
@@ -23,11 +20,6 @@ export default class UserInfoPanel extends ZepetoScriptBehaviour {
     GetSprite(texture: Texture) {
         let rect: Rect = new Rect(0, 0, texture.width, texture.height);
         return Sprite.Create(texture as Texture2D, rect, new Vector2(0.5, 0.5));
-    }
-
-    UpdateCurrentAttacks(currentAmount : number) {
-        this._hitsAmount += currentAmount;
-        this.hitsText.text = this._hitsAmount.toString();
     }
 
     UpdateLifetimeAttacks(lifeTimeAmount : number) {

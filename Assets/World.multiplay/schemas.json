@@ -1,4 +1,5 @@
 {
-"State" : {"schemaPlayers" : {"map" : "SchemaPlayer"}},
-"SchemaPlayer" : {"userId" : "string","sessionId" : "string","name" : "string","attackCount" : "number"}
+"State" : {"schemaPlayers" : {"map" : "SchemaPlayer"},"enemy" : "Enemy"},
+"SchemaPlayer" : {"userId" : "string","attackCount" : "number"},
+"Enemy" : {"health" : "number"}
 }

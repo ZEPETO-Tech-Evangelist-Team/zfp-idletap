@@ -28,19 +28,19 @@ export default class Main extends ZepetoScriptBehaviour
         this._currentPlayers = new Map<string, SchemaPlayer>();
         this.UIManager = this.UIManagerGameObject.GetComponent<UIManager>();
         this.multiplayReference.RoomJoined += (room: Room) => {
-            // Make reference to room
+
             this._roomReference = room;
 
             this._roomReference.OnStateChange += this.OnStateChange;
-
-            // Add server message listener type by "attack"
-            room.AddMessageHandler<AttackInfo>("SERVER_ATTACK_MESSAGE", (message: AttackInfo) => {
-                // Execute server message
-                this.Attack(message.attackAmount);
-                this.UIManager.UserInfoPanels.get(message.ownerUserId).UpdateCurrentAttacks(message.attackAmount);
-                this.UIManager.UserInfoPanels.get(message.ownerUserId).UpdateLifetimeAttacks(message.lifetimeAttacks);
-            });
         };
+    }
+
+    public SaveData() {
+        this._roomReference.Send("CLIENT_SAVEDATA_REQUEST_MESSAGE", null);
+    }
+
+    public LoadData() {
+        this._roomReference.Send("CLIENT_LOADDATA_REQUEST_MESSAGE", null);
     }
 
     //Attacks
@@ -49,9 +49,8 @@ export default class Main extends ZepetoScriptBehaviour
         this._roomReference.Send("CLIENT_ATTACK_MESSAGE", damageAmount);
     }
 
-    public Attack(attackAmount: number) {
-        let height = this.enemyGameObject.transform.localScale.y;
-        this.enemyGameObject.transform.localScale = new Vector3(4, height - attackAmount, 4);
+    public Attack() {
+        this.enemyGameObject.transform.localScale = new Vector3(4, this._roomReference.State.enemy.health, 4);
 
         if (this.enemyGameObject.transform.localScale.y === 0) {
             this.enemyGameObject.transform.localScale = new Vector3(4, 15, 4);
@@ -60,6 +59,10 @@ export default class Main extends ZepetoScriptBehaviour
 
     /** multiplayer Spawn **/
     private OnStateChange(state: State, isFirst: boolean) {
+        if (isFirst) {
+            state.enemy.OnChange += this.Attack;
+            this.Attack();
+        }
         const join = new Map<string, SchemaPlayer>();
         const leave = new Map<string, SchemaPlayer>(this._currentPlayers);
 
@@ -76,6 +79,8 @@ export default class Main extends ZepetoScriptBehaviour
 
         // [RoomState] Remove the player instance for players that exit the room
         leave.forEach((schemaPlayer: SchemaPlayer, userId: string) => this.OnLeavePlayer(userId, schemaPlayer));
+
+        this.UpdateUI();
     }
 
     private OnJoinPlayer(userId : string, schemaPlayer : SchemaPlayer) {
@@ -85,5 +90,11 @@ export default class Main extends ZepetoScriptBehaviour
     private OnLeavePlayer(userId : string, schemaPlayer : SchemaPlayer) {
         this._currentPlayers.delete(userId);
         this.UIManager.RemoveUserInfoPanel(userId);
+    }
+
+    private UpdateUI() {
+        this._currentPlayers.forEach((player : SchemaPlayer, userId : string) => {
+            this.UIManager.UserInfoPanels.get(userId).UpdateLifetimeAttacks(player.attackCount);
+        });
     }
 }

@@ -5,13 +5,13 @@ declare module "ZEPETO.Multiplay.Schema" {
 
 	interface State extends Schema {
 		schemaPlayers: MapSchema<SchemaPlayer>;
-		enemy: Enemy;
+		schemaEnemy: SchemaEnemy;
 	}
 	class SchemaPlayer extends Schema {
 		userId: string;
 		attackCount: number;
 	}
-	class Enemy extends Schema {
+	class SchemaEnemy extends Schema {
 		health: number;
 	}
 }

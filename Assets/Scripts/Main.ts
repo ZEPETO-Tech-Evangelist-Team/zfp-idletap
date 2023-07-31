@@ -1,9 +1,17 @@
 import { Debug, GameObject, Vector3 } from 'UnityEngine';
 import { Room } from 'ZEPETO.Multiplay';
-import { SchemaPlayer, State } from 'ZEPETO.Multiplay.Schema';
+import { SchemaEnemy, SchemaPlayer, State } from 'ZEPETO.Multiplay.Schema';
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
 import { Users, ZepetoWorldHelper, ZepetoWorldMultiplay } from 'ZEPETO.World';
 import UIManager from './UIManager';
+import Enemy from './Enemy';
+
+//Topics
+//Send Messages
+//Schema
+//Datastorage
+//OnStateChange
+//Onchange
 
 export interface AttackInfo {
     ownerUserId : string,
@@ -11,22 +19,27 @@ export interface AttackInfo {
     lifetimeAttacks : number
 }
 
+export const ENEMY_START_HEALTH = 15;
+
 export default class Main extends ZepetoScriptBehaviour
 {
     public UIManagerGameObject : GameObject;
     public UIManager : UIManager;
 
+    public EnemyGameObject: GameObject;
+    public Enemy : Enemy;
+
     public multiplayReference: ZepetoWorldMultiplay;
     private _roomReference: Room;
-
-    public enemyGameObject: GameObject;
 
     private _currentPlayers : Map<string, SchemaPlayer>;
 
     Start() 
-    {    
+    {   
         this._currentPlayers = new Map<string, SchemaPlayer>();
         this.UIManager = this.UIManagerGameObject.GetComponent<UIManager>();
+        this.Enemy = this.EnemyGameObject.GetComponent<Enemy>();
+
         this.multiplayReference.RoomJoined += (room: Room) => {
 
             this._roomReference = room;
@@ -50,17 +63,14 @@ export default class Main extends ZepetoScriptBehaviour
     }
 
     public Attack() {
-        this.enemyGameObject.transform.localScale = new Vector3(4, this._roomReference.State.enemy.health, 4);
-
-        if (this.enemyGameObject.transform.localScale.y === 0) {
-            this.enemyGameObject.transform.localScale = new Vector3(4, 15, 4);
-        }
+        this.Enemy.Attack(this._roomReference.State.schemaEnemy.health);
     }
 
     /** multiplayer Spawn **/
     private OnStateChange(state: State, isFirst: boolean) {
+        console.log("on state change");
         if (isFirst) {
-            state.enemy.OnChange += this.Attack;
+            state.schemaEnemy.OnChange += this.Attack;
             this.Attack();
         }
         const join = new Map<string, SchemaPlayer>();

@@ -1,0 +1,32 @@
+fileFormatVersion: 2
+guid: e65198d4e90a0ac4b833f3a6135e2885
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
+    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst Main_1 = require(\"./Main\");\r\nclass
+    Enemy extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    Start() {\r\n       
+    this.health = 0;\r\n    }\r\n    Attack(health) {\r\n        this.BodyGO.transform.localScale
+    = new UnityEngine_1.Vector3(4, health, 4);\r\n        this.HealthBar.value =
+    health;\r\n        if (this.BodyGO.transform.localScale.y === 0) {\r\n           
+    this.BodyGO.transform.localScale = new UnityEngine_1.Vector3(4, Main_1.ENEMY_START_HEALTH,
+    4);\r\n            this.HealthBar.value = Main_1.ENEMY_START_HEALTH;\r\n       
+    }\r\n    }\r\n}\r\nexports.default = Enemy;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiRW5lbXkuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJFbmVteS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUFBLDZDQUFrRDtBQUVsRCxpREFBcUQ7QUFDckQsaUNBQTRDO0FBRTVDLE1BQXFCLEtBQU0sU0FBUSxxQ0FBcUI7SUFLcEQsS0FBSztRQUNELElBQUksQ0FBQyxNQUFNLEdBQUcsQ0FBQyxDQUFDO0lBQ3BCLENBQUM7SUFFRCxNQUFNLENBQUMsTUFBZTtRQUNsQixJQUFJLENBQUMsTUFBTSxDQUFDLFNBQVMsQ0FBQyxVQUFVLEdBQUcsSUFBSSxxQkFBTyxDQUFDLENBQUMsRUFBRSxNQUFNLEVBQUUsQ0FBQyxDQUFDLENBQUM7UUFDN0QsSUFBSSxDQUFDLFNBQVMsQ0FBQyxLQUFLLEdBQUcsTUFBTSxDQUFDO1FBRTlCLElBQUksSUFBSSxDQUFDLE1BQU0sQ0FBQyxTQUFTLENBQUMsVUFBVSxDQUFDLENBQUMsS0FBSyxDQUFDLEVBQUU7WUFDMUMsSUFBSSxDQUFDLE1BQU0sQ0FBQyxTQUFTLENBQUMsVUFBVSxHQUFHLElBQUkscUJBQU8sQ0FBQyxDQUFDLEVBQUUseUJBQWtCLEVBQUUsQ0FBQyxDQUFDLENBQUM7WUFDekUsSUFBSSxDQUFDLFNBQVMsQ0FBQyxLQUFLLEdBQUcseUJBQWtCLENBQUM7U0FDN0M7SUFDTCxDQUFDO0NBRUo7QUFuQkQsd0JBbUJDIn0=","assetPath":"Assets/Scripts/Enemy.ts","manifest":{"properties":[{"assembly":"UnityEngine.UI","name":"HealthBar","type":"UnityEngine.UI.Slider","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"UnityEngine.CoreModule","name":"BodyGO","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"Enemy","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: b6cab576aa267bf2f94c56d1f540daa8
+  onlyWriteTrigger: 0

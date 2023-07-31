@@ -8,10 +8,12 @@ export interface AttackInfo {
     lifetimeAttacks : number
 }
 
+export const ENEMY_START_HEALTH = 15;
+
 export default class extends Sandbox {
     onCreate(options: SandboxOptions) {
         console.log("on create");
-        this.state.enemy.health = 15;
+        this.state.schemaEnemy.health = ENEMY_START_HEALTH;
 
         this.onMessage("CLIENT_ATTACK_MESSAGE", (client: SandboxPlayer, message: number) => {
             console.log("CLIENT_ATTACK_MESSAGE received");
@@ -20,9 +22,9 @@ export default class extends Sandbox {
                 schemaPlayer.attackCount += message;
             }
 
-            this.state.enemy.health -= message;
-            if (this.state.enemy.health === 0) {
-                this.state.enemy.health = 15;
+            this.state.schemaEnemy.health -= message;
+            if (this.state.schemaEnemy.health === 0) {
+                this.state.schemaEnemy.health = ENEMY_START_HEALTH;
             }
         });
     }

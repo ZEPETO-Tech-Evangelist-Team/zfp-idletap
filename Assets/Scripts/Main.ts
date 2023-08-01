@@ -1,17 +1,10 @@
-import { Debug, GameObject, Vector3 } from 'UnityEngine';
+import { GameObject } from 'UnityEngine';
 import { Room } from 'ZEPETO.Multiplay';
-import { SchemaEnemy, SchemaPlayer, State } from 'ZEPETO.Multiplay.Schema';
+import { SchemaPlayer, State } from 'ZEPETO.Multiplay.Schema';
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
-import { Users, ZepetoWorldHelper, ZepetoWorldMultiplay } from 'ZEPETO.World';
+import { ZepetoWorldMultiplay } from 'ZEPETO.World';
 import UIManager from './UIManager';
 import Enemy from './Enemy';
-
-//Topics
-//Send Messages
-//Schema
-//Datastorage
-//OnStateChange
-//Onchange
 
 export interface AttackInfo {
     ownerUserId : string,
@@ -23,56 +16,75 @@ export const ENEMY_START_HEALTH = 15;
 
 export default class Main extends ZepetoScriptBehaviour
 {
-    public UIManagerGameObject : GameObject;
-    public UIManager : UIManager;
+    public UIManagerGO : GameObject;
+    public EnemyGO: GameObject;
+    public MultiplayReference: ZepetoWorldMultiplay;
 
-    public EnemyGameObject: GameObject;
-    public Enemy : Enemy;
+    private static _main : Main;
 
-    public multiplayReference: ZepetoWorldMultiplay;
-    private _roomReference: Room;
-
+    //Map to track players in the game
     private _currentPlayers : Map<string, SchemaPlayer>;
 
-    Start() 
-    {   
+    private _uIManager : UIManager;
+    private _enemy : Enemy;
+    private _roomReference: Room;
+
+    Awake() {
+        Main._main = this;
+    }
+
+    Start() {
+        //initialize _currentPlayers Map
         this._currentPlayers = new Map<string, SchemaPlayer>();
-        this.UIManager = this.UIManagerGameObject.GetComponent<UIManager>();
-        this.Enemy = this.EnemyGameObject.GetComponent<Enemy>();
 
-        this.multiplayReference.RoomJoined += (room: Room) => {
+        //cache reference to UIManager;
+        this._uIManager = this.UIManagerGO.GetComponent<UIManager>();
 
+        //cache reference to Enemy
+        this._enemy = this.EnemyGO.GetComponent<Enemy>();
+
+        //register callback method for ZepetoWorldMultiplay.RoomJoined
+        this.MultiplayReference.RoomJoined += (room: Room) => {
+
+            //cache reference to Room
             this._roomReference = room;
 
-            this._roomReference.OnStateChange += this.OnStateChange;
+            //register callback method for Room.OnStateChange
+            this._roomReference.OnStateChange += this._onStateChange;
         };
     }
-
-    public SaveData() {
-        this._roomReference.Send("CLIENT_SAVEDATA_REQUEST_MESSAGE", null);
+    
+    //Staic functon to access Main
+    public static GetInstance() : Main {
+        return this._main;
     }
 
-    public LoadData() {
-        this._roomReference.Send("CLIENT_LOADDATA_REQUEST_MESSAGE", null);
-    }
-
-    //Attacks
-    public SendAttackMessageToServer() {
+    public AttackEnemy() {
         let damageAmount: number = 1;
         this._roomReference.Send("CLIENT_ATTACK_MESSAGE", damageAmount);
     }
 
-    public Attack() {
-        this.Enemy.Attack(this._roomReference.State.schemaEnemy.health);
+    private _updatePlayers() {
+        this._uIManager.UpdatePlayers(this._currentPlayers);
+    }
+
+    private _updateEnemy() {
+        this._enemy.UpdateEnemy(this._roomReference.State.schemaEnemy.health);
     }
 
     /** multiplayer Spawn **/
-    private OnStateChange(state: State, isFirst: boolean) {
-        console.log("on state change");
+    private _onStateChange(state: State, isFirst: boolean) {
         if (isFirst) {
-            state.schemaEnemy.OnChange += this.Attack;
-            this.Attack();
+            state.schemaEnemy.OnChange += this._updateEnemy;
+            this._updateEnemy();
         }
+
+        this._updatePlayersMap(state);
+
+        this._updatePlayers();
+    }
+
+    private _updatePlayersMap(state : State) {
         const join = new Map<string, SchemaPlayer>();
         const leave = new Map<string, SchemaPlayer>(this._currentPlayers);
 
@@ -85,26 +97,18 @@ export default class Main extends ZepetoScriptBehaviour
         });
 
         // [RoomState] Create a player instance for players that enter the Room
-        join.forEach((schemaPlayer: SchemaPlayer, userId: string) => this.OnJoinPlayer(userId, schemaPlayer));
+        join.forEach((schemaPlayer: SchemaPlayer, userId: string) => this._onJoinPlayer(userId, schemaPlayer));
 
         // [RoomState] Remove the player instance for players that exit the room
-        leave.forEach((schemaPlayer: SchemaPlayer, userId: string) => this.OnLeavePlayer(userId, schemaPlayer));
-
-        this.UpdateUI();
+        leave.forEach((schemaPlayer: SchemaPlayer, userId: string) => this._onLeavePlayer(userId, schemaPlayer));
     }
 
-    private OnJoinPlayer(userId : string, schemaPlayer : SchemaPlayer) {
-        this.UIManager.AddUserInfoPanel(userId);
+    private _onJoinPlayer(userId : string, schemaPlayer : SchemaPlayer) {
+        this._uIManager.AddUserInfoPanel(userId);
     }
 
-    private OnLeavePlayer(userId : string, schemaPlayer : SchemaPlayer) {
+    private _onLeavePlayer(userId : string, schemaPlayer : SchemaPlayer) {
         this._currentPlayers.delete(userId);
-        this.UIManager.RemoveUserInfoPanel(userId);
-    }
-
-    private UpdateUI() {
-        this._currentPlayers.forEach((player : SchemaPlayer, userId : string) => {
-            this.UIManager.UserInfoPanels.get(userId).UpdateLifetimeAttacks(player.attackCount);
-        });
+        this._uIManager.RemoveUserInfoPanel(userId);
     }
 }

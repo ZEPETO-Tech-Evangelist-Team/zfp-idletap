@@ -4,15 +4,10 @@ import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
 import { ENEMY_START_HEALTH } from './Main';
 
 export default class Enemy extends ZepetoScriptBehaviour {
-    public HealthBar : Slider;
-    private health : number;
     public BodyGO : GameObject;
+    public HealthBar : Slider;
 
-    Start() { 
-        this.health = 0;   
-    }
-
-    Attack(health : number) {
+    public UpdateEnemy(health : number) {
         this.BodyGO.transform.localScale = new Vector3(4, health, 4);
         this.HealthBar.value = health;
 

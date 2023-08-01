@@ -12,7 +12,6 @@ export const ENEMY_START_HEALTH = 15;
 
 export default class extends Sandbox {
     onCreate(options: SandboxOptions) {
-        console.log("on create");
         this.state.schemaEnemy.health = ENEMY_START_HEALTH;
 
         this.onMessage("CLIENT_ATTACK_MESSAGE", (client: SandboxPlayer, message: number) => {

@@ -768,19 +768,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 500214784}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1271389075}
-        m_TargetAssemblyTypeName: ZEPETO.Script.ZepetoScriptBehaviourComponent, ZEPETO.Script
-        m_MethodName: Invoke
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: SendAttackMessageToServer
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &500214784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -938,9 +926,12 @@ MonoBehaviour:
   script:
     keys:
     - UserInfoPanelsParent
+    - AttackButton
     unityValues:
     - {fileID: 1879208839}
+    - {fileID: 500214783}
     values:
+    - 
     - 
     unityArrayValues: []
     arrayValues: []
@@ -1796,20 +1787,14 @@ MonoBehaviour:
   applyRootMotion: 0
   script:
     keys:
-    - multiplayReference
-    - EnemyGameObject
-    - UIManagerGameObject
-    - UIManager
-    - Enemy
+    - MultiplayReference
+    - EnemyGO
+    - UIManagerGO
     unityValues:
     - {fileID: 2131993760}
     - {fileID: 1176265545}
     - {fileID: 516506905}
-    - {fileID: 0}
-    - {fileID: 0}
     values:
-    - 
-    - 
     - 
     - 
     - 

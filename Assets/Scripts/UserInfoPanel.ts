@@ -8,22 +8,21 @@ export default class UserInfoPanel extends ZepetoScriptBehaviour {
     public profileImage : Image;
     public lifetimeHitsText : TextMeshProUGUI;
 
-    InitUserInfoPanel(userId : string) {
+    public InitUserInfoPanel(userId : string) {
         ZepetoWorldHelper.GetProfileTexture(userId, (texture: Texture) => {
-            this.profileImage.sprite = this.GetSprite(texture);
+            this.profileImage.sprite = this._getSprite(texture);
         
         }, (error) => {
             Debug.LogError(error);
         });
     }
 
-    GetSprite(texture: Texture) {
-        let rect: Rect = new Rect(0, 0, texture.width, texture.height);
-        return Sprite.Create(texture as Texture2D, rect, new Vector2(0.5, 0.5));
-    }
-
-    UpdateLifetimeAttacks(lifeTimeAmount : number) {
+    public UpdateLifetimeAttacks(lifeTimeAmount : number) {
         this.lifetimeHitsText.text = lifeTimeAmount.toString();
     }
 
+    private _getSprite(texture: Texture) {
+        let rect: Rect = new Rect(0, 0, texture.width, texture.height);
+        return Sprite.Create(texture as Texture2D, rect, new Vector2(0.5, 0.5));
+    }
 }

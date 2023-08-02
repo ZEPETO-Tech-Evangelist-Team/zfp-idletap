@@ -1,6 +1,9 @@
 import { Sandbox, SandboxOptions, SandboxPlayer } from "ZEPETO.Multiplay";
+import { IModule } from "./ServerModule/IModule";
 import { DataStorage } from "ZEPETO.Multiplay.DataStorage";
 import { SchemaPlayer } from "ZEPETO.Multiplay.Schema";
+import MessageLessonModule from "./ServerModule/Modules/MessageLessonModule";
+import DataStoreLessonModule from "./ServerModule/Modules/DataStoreLessonModule";
 
 export interface AttackInfo {
     ownerUserId : string,
@@ -11,8 +14,17 @@ export interface AttackInfo {
 export const ENEMY_START_HEALTH = 15;
 
 export default class extends Sandbox {
-    onCreate(options: SandboxOptions) {
+    private readonly _modules: IModule[] = [];
+
+    async onCreate(options: SandboxOptions) {
+        this._modules.push(new MessageLessonModule(this));
+        this._modules.push(new DataStoreLessonModule(this));
+        for (const module of this._modules) {
+            await module.OnCreate();
+        }
+
         this.state.schemaEnemy.health = ENEMY_START_HEALTH;
+        this.state.schemaNumber = 0;
 
         this.onMessage("CLIENT_ATTACK_MESSAGE", (client: SandboxPlayer, message: number) => {
             console.log("CLIENT_ATTACK_MESSAGE received");

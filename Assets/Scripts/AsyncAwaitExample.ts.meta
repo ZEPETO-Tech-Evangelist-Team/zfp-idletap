@@ -1,0 +1,37 @@
+fileFormatVersion: 2
+guid: 1ec749e1d9c34534badc9bfea07e50eb
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nclass
+    AsyncAwaitExample extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    Delay(milliseconds)
+    {\r\n        return new Promise(resolve => {\r\n            setTimeout(resolve,
+    milliseconds);\r\n        });\r\n    }\r\n    async MockLoadNumber() {\r\n       
+    await this.Delay(3000);\r\n        return 10;\r\n    }\r\n    async Init() {\r\n       
+    console.log(\"Executed now\");\r\n        await this.Delay(1000);\r\n       
+    console.log(\"Executed after 1 second wait\");\r\n        await this.Delay(1000);\r\n       
+    console.log(\"Executed after 2 seconds wait\");\r\n    }\r\n    Start() {\r\n       
+    this.Init();\r\n        console.log(\"Executed after the 1st log and before the
+    2 delays\");\r\n        this.GetDataFromMockServer();\r\n        console.log(\"Executed
+    before GetDataFromMockServer returns\");\r\n    }\r\n    async GetDataFromMockServer()
+    {\r\n        const myNumber = await this.MockLoadNumber();\r\n        console.log(\"[GetDataFromMockServer]
+    response: \" + myNumber);\r\n        return myNumber;\r\n    }\r\n}\r\nexports.default
+    = AsyncAwaitExample;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiQXN5bmNBd2FpdEV4YW1wbGUuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJBc3luY0F3YWl0RXhhbXBsZS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUFBLGlEQUFxRDtBQUVyRCxNQUFxQixpQkFBa0IsU0FBUSxxQ0FBcUI7SUFDaEUsS0FBSyxDQUFFLFlBQVk7UUFDZixPQUFPLElBQUksT0FBTyxDQUFDLE9BQU8sQ0FBQyxFQUFFO1lBQ3pCLFVBQVUsQ0FBQyxPQUFPLEVBQUUsWUFBWSxDQUFDLENBQUM7UUFDdEMsQ0FBQyxDQUFDLENBQUM7SUFDUCxDQUFDO0lBRUQsS0FBSyxDQUFDLGNBQWM7UUFDaEIsTUFBTSxJQUFJLENBQUMsS0FBSyxDQUFDLElBQUksQ0FBQyxDQUFDO1FBQ3ZCLE9BQU8sRUFBRSxDQUFDO0lBQ2QsQ0FBQztJQUVELEtBQUssQ0FBQyxJQUFJO1FBQ04sT0FBTyxDQUFDLEdBQUcsQ0FBQyxjQUFjLENBQUMsQ0FBQztRQUU1QixNQUFNLElBQUksQ0FBQyxLQUFLLENBQUMsSUFBSSxDQUFDLENBQUM7UUFFdkIsT0FBTyxDQUFDLEdBQUcsQ0FBQyw4QkFBOEIsQ0FBQyxDQUFDO1FBRTVDLE1BQU0sSUFBSSxDQUFDLEtBQUssQ0FBQyxJQUFJLENBQUMsQ0FBQztRQUV2QixPQUFPLENBQUMsR0FBRyxDQUFDLCtCQUErQixDQUFDLENBQUM7SUFDakQsQ0FBQztJQUVELEtBQUs7UUFDRCxJQUFJLENBQUMsSUFBSSxFQUFFLENBQUM7UUFDWixPQUFPLENBQUMsR0FBRyxDQUFDLG9EQUFvRCxDQUFDLENBQUM7UUFFbEUsSUFBSSxDQUFDLHFCQUFxQixFQUFFLENBQUM7UUFDN0IsT0FBTyxDQUFDLEdBQUcsQ0FBQywrQ0FBK0MsQ0FBQyxDQUFDO0lBQ2pFLENBQUM7SUFFRCxLQUFLLENBQUMscUJBQXFCO1FBQ3ZCLE1BQU0sUUFBUSxHQUFZLE1BQU0sSUFBSSxDQUFDLGNBQWMsRUFBRSxDQUFDO1FBQ3RELE9BQU8sQ0FBQyxHQUFHLENBQUMsb0NBQW9DLEdBQUcsUUFBUSxDQUFDLENBQUM7UUFDN0QsT0FBTyxRQUFRLENBQUM7SUFDcEIsQ0FBQztDQUNKO0FBckNELG9DQXFDQyJ9","assetPath":"Assets/Scripts/AsyncAwaitExample.ts","manifest":{"properties":[],"name":"AsyncAwaitExample","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: b41050ddbd00a5d0827bc0bf486ff4d7
+  onlyWriteTrigger: 0

@@ -1,0 +1,58 @@
+fileFormatVersion: 2
+guid: 0241b9927be0ba044a9078b51a975632
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst ZEPETO_Multiplay_1 = require(\"ZEPETO.Multiplay\");\r\nconst
+    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nclass SendMessageLessonClient
+    extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    Start() {\r\n        this.SendSimpleMessageButton.onClick.AddListener(()
+    => {\r\n            this._sendSimpleMessage();\r\n        });\r\n        this.SendCustomMessageButton.onClick.AddListener(()
+    => {\r\n            this._sendCustomMessage();\r\n        });\r\n        this.SendRoomDataMessageButton.onClick.AddListener(()
+    => {\r\n            this._sendRoomDataMessage();\r\n        });\r\n        this.SendUpdateSchemaStateMessageButton.onClick.AddListener(()
+    => {\r\n            this._sendUpdateSchemaStateMessage();\r\n        });\r\n       
+    this.SendUpdateSchemaEnemyMessaageButton.onClick.AddListener(() => {\r\n           
+    this._sendUpdateSchemaEnemyMessage();\r\n        });\r\n        this.MultiplayReference.add_RoomJoined((room)
+    => {\r\n            //cache reference to Room\r\n            this._roomReference
+    = room;\r\n            //register callback method for Room.OnStateChange\r\n           
+    this._roomReference.add_OnStateChange(this._onStateChange.bind(this));\r\n           
+    this._roomReference.AddMessageHandler(\"SIMPLE_MESSAGE\", (message) => {\r\n               
+    console.log(`[SIMPLE_MESSAGE] received from server, message: ${message}`);\r\n           
+    });\r\n            this._roomReference.AddMessageHandler(\"CUSTOM_MESSAGE\",
+    (message) => {\r\n                console.log(`[CUSTOM_MESSAGE] received from
+    server, str: ${message.str} isTest: ${message.isTest}`);\r\n            });\r\n           
+    this._roomReference.AddMessageHandler(\"ROOM_DATA_MESSAGE\", (message) => {\r\n               
+    console.log(`[CUSTOM_MESSAGE] received from server, someString: ${message[\"someString\"]}
+    someNumber: ${message[\"someNumber\"]} someBoolean: ${message[\"someBoolean\"]}`);\r\n           
+    });\r\n        });\r\n    }\r\n    _sendSimpleMessage() {\r\n        this._roomReference.Send(\"SIMPLE_MESSAGE\",
+    \"Hello Server\");\r\n    }\r\n    _sendRoomDataMessage() {\r\n        const
+    myRoomData = new ZEPETO_Multiplay_1.RoomData();\r\n        myRoomData.Add(\"someString\",
+    \"Bob Data\");\r\n        myRoomData.Add(\"someNumber\", 100);\r\n        myRoomData.Add(\"someBoolean\",
+    true);\r\n        this._roomReference.Send(\"ROOM_DATA_MESSAGE\", myRoomData.GetObject());\r\n   
+    }\r\n    _sendCustomMessage() {\r\n        let message = { str: \"Hello There!\",
+    isTest: true };\r\n        this._roomReference.Send(\"CUSTOM_MESSAGE\", message);\r\n   
+    }\r\n    _sendUpdateSchemaStateMessage() {\r\n        this._roomReference.Send(\"UPDATE_SCHEMA_STATE_MESSAGE\",
+    \"\");\r\n    }\r\n    _sendUpdateSchemaEnemyMessage() {\r\n        this._roomReference.Send(\"UPDATE_SCHEMA_ENEMY_MESSAGE\",
+    \"\");\r\n    }\r\n    _onStateChange(state, isFirst) {\r\n        if (isFirst)
+    {\r\n            state.schemaEnemy.add_OnChange(this._onSchemaEnemyChange.bind(this));\r\n       
+    }\r\n        console.log(\"on state change\");\r\n        console.log(this._roomReference.State.schemaNumber);\r\n   
+    }\r\n    _onSchemaEnemyChange() {\r\n        console.log(\"on schema enemy change\");\r\n       
+    console.log(this._roomReference.State.schemaEnemy.health);\r\n    }\r\n}\r\nexports.default
+    = SendMessageLessonClient;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiU2VuZE1lc3NhZ2VMZXNzb25DbGllbnQuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJTZW5kTWVzc2FnZUxlc3NvbkNsaWVudC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUNBLHVEQUFrRDtBQUVsRCxpREFBcUQ7QUFRckQsTUFBcUIsdUJBQXdCLFNBQVEscUNBQXFCO0lBVXRFLEtBQUs7UUFDRCxJQUFJLENBQUMsdUJBQXVCLENBQUMsT0FBTyxDQUFDLFdBQVcsQ0FBQyxHQUFHLEVBQUU7WUFDbEQsSUFBSSxDQUFDLGtCQUFrQixFQUFFLENBQUM7UUFDOUIsQ0FBQyxDQUFDLENBQUM7UUFDSCxJQUFJLENBQUMsdUJBQXVCLENBQUMsT0FBTyxDQUFDLFdBQVcsQ0FBQyxHQUFHLEVBQUU7WUFDbEQsSUFBSSxDQUFDLGtCQUFrQixFQUFFLENBQUM7UUFDOUIsQ0FBQyxDQUFDLENBQUM7UUFDSCxJQUFJLENBQUMseUJBQXlCLENBQUMsT0FBTyxDQUFDLFdBQVcsQ0FBQyxHQUFHLEVBQUU7WUFDcEQsSUFBSSxDQUFDLG9CQUFvQixFQUFFLENBQUM7UUFDaEMsQ0FBQyxDQUFDLENBQUM7UUFFSCxJQUFJLENBQUMsa0NBQWtDLENBQUMsT0FBTyxDQUFDLFdBQVcsQ0FBQyxHQUFHLEVBQUU7WUFDN0QsSUFBSSxDQUFDLDZCQUE2QixFQUFFLENBQUM7UUFDekMsQ0FBQyxDQUFDLENBQUM7UUFFSCxJQUFJLENBQUMsbUNBQW1DLENBQUMsT0FBTyxDQUFDLFdBQVcsQ0FBQyxHQUFHLEVBQUU7WUFDOUQsSUFBSSxDQUFDLDZCQUE2QixFQUFFLENBQUM7UUFDekMsQ0FBQyxDQUFDLENBQUM7UUFFSCxJQUFJLENBQUMsa0JBQWtCLGdCQUFlLENBQUMsSUFBVSxFQUFFLEVBQUU7WUFFakQseUJBQXlCO1lBQ3pCLElBQUksQ0FBQyxjQUFjLEdBQUcsSUFBSSxDQUFDO1lBRTNCLGlEQUFpRDtZQUNqRCxJQUFJLENBQUMsY0FBYyxtQkFBa0IsSUFBSSxDQUFD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","assetPath":"Assets/Scripts/SendMessageLessonClient.ts","manifest":{"properties":[{"assembly":"UnityEngine.UI","name":"SendSimpleMessageButton","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"UnityEngine.UI","name":"SendCustomMessageButton","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"UnityEngine.UI","name":"SendRoomDataMessageButton","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"UnityEngine.UI","name":"SendUpdateSchemaStateMessageButton","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"UnityEngine.UI","name":"SendUpdateSchemaEnemyMessaageButton","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"ZEPETO.World","name":"MultiplayReference","type":"ZEPETO.World.ZepetoWorldMultiplay","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"SendMessageLessonClient","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 1f867f75197ae5e72d31edd744b8dc2a
+  onlyWriteTrigger: 0

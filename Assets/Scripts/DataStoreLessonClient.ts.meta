@@ -1,0 +1,35 @@
+fileFormatVersion: 2
+guid: 7fb08a796550bc64faf2bc74dfc9e80e
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nclass
+    DataStoreLessonClient extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n   
+    Start() {\r\n        this.LoadSaveDataButton.onClick.AddListener(() => {\r\n           
+    this._loadSaveData();\r\n        });\r\n        this.LoadSaveCustomDataButton.onClick.AddListener(()
+    => {\r\n            this._loadSaveCustomData();\r\n        });\r\n        this.MultiLoadSaveCustomDataButton.onClick.AddListener(()
+    => {\r\n            this._multiLoadSaveCustomData();\r\n        });\r\n       
+    this.MultiplayReference.add_RoomJoined((room) => {\r\n            //cache reference
+    to Room\r\n            this._roomReference = room;\r\n        });\r\n    }\r\n   
+    _loadSaveData() {\r\n        this._roomReference.Send(\"LOAD_SAVE_DATA\", \"\");\r\n   
+    }\r\n    _loadSaveCustomData() {\r\n        this._roomReference.Send(\"LOAD_SAVE_CUSTOM_DATA\",
+    \"\");\r\n    }\r\n    _multiLoadSaveCustomData() {\r\n        this._roomReference.Send(\"MULTI_LOAD_SAVE_CUSTOM_DATA\",
+    \"\");\r\n    }\r\n}\r\nexports.default = DataStoreLessonClient;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiRGF0YVN0b3JlTGVzc29uQ2xpZW50LmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiRGF0YVN0b3JlTGVzc29uQ2xpZW50LnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBRUEsaURBQXFEO0FBR3JELE1BQXFCLHFCQUFzQixTQUFRLHFDQUFxQjtJQVFwRSxLQUFLO1FBRUQsSUFBSSxDQUFDLGtCQUFrQixDQUFDLE9BQU8sQ0FBQyxXQUFXLENBQUMsR0FBRyxFQUFFO1lBQzdDLElBQUksQ0FBQyxhQUFhLEVBQUUsQ0FBQztRQUN6QixDQUFDLENBQUMsQ0FBQztRQUVILElBQUksQ0FBQyx3QkFBd0IsQ0FBQyxPQUFPLENBQUMsV0FBVyxDQUFDLEdBQUcsRUFBRTtZQUNuRCxJQUFJLENBQUMsbUJBQW1CLEVBQUUsQ0FBQztRQUMvQixDQUFDLENBQUMsQ0FBQztRQUVILElBQUksQ0FBQyw2QkFBNkIsQ0FBQyxPQUFPLENBQUMsV0FBVyxDQUFDLEdBQUcsRUFBRTtZQUN4RCxJQUFJLENBQUMsd0JBQXdCLEVBQUUsQ0FBQztRQUNwQyxDQUFDLENBQUMsQ0FBQztRQUVILElBQUksQ0FBQyxrQkFBa0IsZ0JBQWUsQ0FBQyxJQUFVLEVBQUUsRUFBRTtZQUVqRCx5QkFBeUI7WUFDekIsSUFBSSxDQUFDLGNBQWMsR0FBRyxJQUFJLENBQUM7UUFDL0IsQ0FBQyxFQUFDO0lBQ04sQ0FBQztJQUVPLGFBQWE7UUFDakIsSUFBSSxDQUFDLGNBQWMsQ0FBQyxJQUFJLENBQUMsZ0JBQWdCLEVBQUUsRUFBRSxDQUFDLENBQUM7SUFDbkQsQ0FBQztJQUVPLG1CQUFtQjtRQUN2QixJQUFJLENBQUMsY0FBYyxDQUFDLElBQUksQ0FBQyx1QkFBdUIsRUFBRSxFQUFFLENBQUMsQ0FBQztJQUMxRCxDQUFDO0lBRU8sd0JBQXdCO1FBQzVCLElBQUksQ0FBQyxjQUFjLENBQUMsSUFBSSxDQUFDLDZCQUE2QixFQUFFLEVBQUUsQ0FBQyxDQUFDO0lBQ2hFLENBQUM7Q0FFSjtBQXpDRCx3Q0F5Q0MifQ==","assetPath":"Assets/Scripts/DataStoreLessonClient.ts","manifest":{"properties":[{"assembly":"ZEPETO.World","name":"MultiplayReference","type":"ZEPETO.World.ZepetoWorldMultiplay","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"UnityEngine.UI","name":"LoadSaveDataButton","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"UnityEngine.UI","name":"LoadSaveCustomDataButton","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"UnityEngine.UI","name":"MultiLoadSaveCustomDataButton","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"DataStoreLessonClient","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: b0b9e3c084122d459f90c597b4408f9d
+  onlyWriteTrigger: 0

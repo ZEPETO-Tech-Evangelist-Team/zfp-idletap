@@ -1,16 +1,10 @@
-import { GameObject } from 'UnityEngine';
+import { GameObject, Vector3 } from 'UnityEngine';
 import { Room } from 'ZEPETO.Multiplay';
 import { SchemaPlayer, State } from 'ZEPETO.Multiplay.Schema';
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
 import { ZepetoWorldMultiplay } from 'ZEPETO.World';
 import UIManager from './UIManager';
 import Enemy from './Enemy';
-
-export interface AttackInfo {
-    ownerUserId : string,
-    attackAmount : number,
-    lifetimeAttacks : number
-}
 
 export const ENEMY_START_HEALTH = 15;
 
@@ -22,7 +16,6 @@ export default class Main extends ZepetoScriptBehaviour
 
     private static _main : Main;
 
-    //Map to track players in the game
     private _currentPlayers : Map<string, SchemaPlayer>;
 
     private _uIManager : UIManager;
@@ -54,7 +47,7 @@ export default class Main extends ZepetoScriptBehaviour
         };
     }
     
-    //Staic functon to access Main
+    //Static functon to access Main
     public static GetInstance() : Main {
         return this._main;
     }
@@ -72,9 +65,10 @@ export default class Main extends ZepetoScriptBehaviour
         this._enemy.UpdateEnemy(this._roomReference.State.schemaEnemy.health);
     }
 
-    /** multiplayer Spawn **/
+    //Function registered to Room.OnStateChange
     private _onStateChange(state: State, isFirst: boolean) {
         if (isFirst) {
+            //Register _updateEnemy() callback function when the schemaEnemy changes
             state.schemaEnemy.OnChange += this._updateEnemy;
             this._updateEnemy();
         }
@@ -84,6 +78,7 @@ export default class Main extends ZepetoScriptBehaviour
         this._updatePlayers();
     }
 
+    //This function is responsible for keeping _currentPlayers map up to date with the players still in the Room
     private _updatePlayersMap(state : State) {
         const join = new Map<string, SchemaPlayer>();
         const leave = new Map<string, SchemaPlayer>(this._currentPlayers);
@@ -103,10 +98,12 @@ export default class Main extends ZepetoScriptBehaviour
         leave.forEach((schemaPlayer: SchemaPlayer, userId: string) => this._onLeavePlayer(userId, schemaPlayer));
     }
 
+    //Add player UI when player joins
     private _onJoinPlayer(userId : string, schemaPlayer : SchemaPlayer) {
         this._uIManager.AddUserInfoPanel(userId);
     }
 
+    //Remove player UI when player leaves
     private _onLeavePlayer(userId : string, schemaPlayer : SchemaPlayer) {
         this._currentPlayers.delete(userId);
         this._uIManager.RemoveUserInfoPanel(userId);

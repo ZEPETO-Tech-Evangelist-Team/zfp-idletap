@@ -1,6 +1,5 @@
 import { SandboxPlayer } from "ZEPETO.Multiplay";
 import { IModule } from "../IModule";
-import { SchemaEnemy, SchemaPlayer } from "ZEPETO.Multiplay.Schema";
 
 interface MessageModel {
     str: string,

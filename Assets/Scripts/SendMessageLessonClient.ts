@@ -44,7 +44,8 @@ export default class SendMessageLessonClient extends ZepetoScriptBehaviour {
             this._roomReference = room;
 
             //register callback method for Room.OnStateChange
-            this._roomReference.OnStateChange += this._onStateChange;
+            room.OnStateChange += this._onStateChange;
+            room.State.schemaEnemy.OnChange += this._onSchemaEnemyChange;
 
             this._roomReference.AddMessageHandler("SIMPLE_MESSAGE", (message : string) => {
                 console.log(`[SIMPLE_MESSAGE] received from server, message: ${message}`);
@@ -88,7 +89,7 @@ export default class SendMessageLessonClient extends ZepetoScriptBehaviour {
 
     private _onStateChange(state: State, isFirst: boolean) {
         if (isFirst) {
-            state.schemaEnemy.OnChange += this._onSchemaEnemyChange;
+
         }
         console.log("on state change");
 
